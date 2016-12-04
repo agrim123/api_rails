@@ -21,9 +21,22 @@ module API
 				render json: zombie.errors, status: 422
 			end
 		end
+		def update
+			zombie = Zombie.find(params[:id])
+			if zombie.update(zombie_params)
+				render :json zombie, status: 200
+			else
+				render :json zombie.errors, status: 422
+			end
+		end
 		def show	
 			zombie = Zombie.find(params[:id])	
 			render json: zombie, status: 200	
+		end	
+		def destroy	
+			zombie = Zombie.find(params[:id])	
+			zombie.destroy	
+			head 204	
 		end	
 		private
 		def zombie_params
