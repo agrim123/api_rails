@@ -17,6 +17,8 @@ module API
 			zombie = Zombie.new(zombie_params)
 			if zombie.save
 				render json: zombie,status: 201 #,location: zombie
+			else
+				render json: zombie.errors, status: 422
 			end
 		end
 		def show	
