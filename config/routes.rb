@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-	constraints subdomain: 'api' do
-		namespace :api, path '/' do
-			resources :zombies
-		end
+	namespace :api, path: '/', constraints:{subdomain: 'api'} do
+		resources :zombies
+		resources :humans
 	end
+
 	resources :pages
 end
