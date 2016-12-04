@@ -46,17 +46,18 @@ module API
 		end
 		protected
 		def authenticate	
-			authenticate_basic_auth || render_unauthorized	
+			authenticate_token || render_unauthorized	
 		end	
 
-		def authenticate_basic_auth	
-			authenticate_with_http_basic do |username, password|
+		def authenticate_token
+			authenticate_with_http_token do |token, options|
 				#User.authenticate(username, password)	
-				username == 'admin' && password == 'password'
+				#username == 'admin' && password == 'password'
+				User.find_by(auth_token: token)	
 			end	
 		end
 		def render_unauthorized	
-			self.headers['WWW-Authenticate'] = 'Basic realm="Zombies"'	
+			self.headers['WWW-Authenticate'] = 'Token realm="Zombies"'	
 			render json: 'Bad credentials', status: 401
 		end		
 	end
